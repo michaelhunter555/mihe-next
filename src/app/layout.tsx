@@ -1,8 +1,11 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
-import "./globals.css";
 
-const inter = Inter({ subsets: ["latin"] });
+import MainNavigation from "@/components/Header/MainNavigation";
+import QueryClientWrapper from "@/components/Shared/QueryClient/QueryClientProvider";
+
+import { Content, PageContainer } from "../components/Footer/FooterStyles";
+import AuthProvider from "../context/auth-context";
+import CartContextProvider from "../context/cart/cart-context";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -16,7 +19,18 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+      <body>
+        <QueryClientWrapper>
+          <AuthProvider>
+            <CartContextProvider>
+              <PageContainer>
+                <MainNavigation />
+                <Content>{children}</Content>
+              </PageContainer>
+            </CartContextProvider>
+          </AuthProvider>
+        </QueryClientWrapper>
+      </body>
     </html>
   );
 }
