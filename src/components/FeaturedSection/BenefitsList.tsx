@@ -16,8 +16,8 @@ const BenefitsList = () => {
   return (
     <List>
       {benefits.map((val, i) => (
-        <ListItem key={i}>
-          <ListItemIcon>
+        <ListItem key={i} sx={{ paddingLeft: 0 }}>
+          <ListItemIcon sx={{ alignItems: "center", justifyContent: "center" }}>
             <CheckCircleIcon color="success" sx={{ fontSize: 15 }} />
           </ListItemIcon>
           <ListItemText secondary={val} />

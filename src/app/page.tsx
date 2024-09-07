@@ -1,7 +1,10 @@
 "use client";
 import { useContext, useState } from "react";
 
+import FeaturedBanner from "@/components/FeaturedSection/Banners/FeaturedBanner";
 import BenefitsList from "@/components/FeaturedSection/BenefitsList";
+import HighlightNotes from "@/components/FeaturedSection/Highlights/PaperBenefits";
+import QuantitySelector from "@/components/FeaturedSection/SelectQuantity";
 import ImageList from "@/components/ImagesList/ImageList";
 import ProductRatings from "@/components/Ratings/Ratings";
 import StyledText from "@/components/Shared/Text/StyledText";
@@ -16,6 +19,7 @@ import Divider from "@mui/material/Divider";
 import Grid from "@mui/material/Grid2";
 import Stack from "@mui/material/Stack";
 import useTheme from "@mui/material/styles/useTheme";
+import Typography from "@mui/material/Typography";
 import useMediaQuery from "@mui/material/useMediaQuery";
 
 import { Content, PageContainer } from "../components/Footer/FooterStyles";
@@ -30,6 +34,7 @@ export default function Home() {
   const [imagePath, setImagePath] = useState<string>("/1.jpg");
   const [price, setPrice] = useState<number>(199);
   const [shipping, setShipping] = useState<boolean>(true);
+  const [quantity, setQuantity] = useState<number>(1);
 
   const handleImagePathChange = (path: string) => {
     setImagePath(path);
@@ -48,23 +53,71 @@ export default function Home() {
 
   const handleAddToCart = (quantity: number) => {
     cart.quantity = cart.quantity + quantity;
+    cart.quantity = cart.quantity > 0 ? (cart.quantity -= 1) : 0;
+  };
+
+  const handleQuantity = (action: string) => {
+    //when "+" is clicked
+    if (action === "increment") {
+      setQuantity((prev) => (prev += 1));
+      setPrice((prev) => (prev += shipping ? 199 : 109));
+    } else if (action === "decrement") {
+      setPrice((prev) => {
+        if (quantity > 1) {
+          return shipping ? (prev -= 199) : (prev -= 109);
+        }
+        return shipping ? 199 : 109;
+      });
+      setQuantity((prev) => (prev > 1 ? (prev -= 1) : 1));
+    }
   };
 
   return (
     <PageContainer>
       <Content>
-        <Container maxWidth="lg">
+        <Container maxWidth="lg" sx={{ marginTop: 5 }}>
           <Stack spacing={2}>
-            <Stack direction="column" spacing={3}>
-              <Stack alignItems="center">
-                <StyledText variant="h4">
-                  Effective Fitness For{" "}
-                  <span style={{ color: "#1976d2" }}>
-                    Cost Effective Prices
-                  </span>
-                </StyledText>
-              </Stack>
+            <Stack alignItems="center">
+              <StyledText variant="h6">
+                Effective Fitness For a{" "}
+                <Typography
+                  component="span"
+                  style={{ color: "#3eb9bd", fontSize: 30 }}
+                >
+                  Cost Effective Price.
+                </Typography>
+              </StyledText>
+              <StyledText variant="subtitle2">
+                Keep the calories off this winter without breaking the bank.
+              </StyledText>
 
+              <Stack direction="row" spacing={2} sx={{ margin: "1rem auto" }}>
+                <Chip
+                  variant="filled"
+                  label="learn more"
+                  component="button"
+                  onClick={() => console.log("fuck your mothers amazon")}
+                />
+                <Chip
+                  variant="outlined"
+                  label="FAQs"
+                  component="button"
+                  onClick={() => console.log("fuck your mothers amazon")}
+                />
+              </Stack>
+              <Divider
+                flexItem
+                sx={{ margin: "0 auto", width: { xs: "100%", md: "50%" } }}
+              />
+              <FeaturedBanner />
+            </Stack>
+
+            <Divider>
+              <StyledText variant="subtitle2">
+                The Mihe X-900 Fitness Bike
+              </StyledText>
+            </Divider>
+            <Stack direction="column" spacing={3}>
               <Grid container spacing={2}>
                 <Grid size={7}>
                   <CardMedia
@@ -87,10 +140,14 @@ export default function Home() {
                     sx={{ width: "100%" }}
                     spacing={1}
                   >
-                    <StyledText variant="h4">
+                    <StyledText variant="h5">
                       Mihe X-900 Fitness Bike
                     </StyledText>
                     <ProductRatings />
+                    <StyledText variant="h4">
+                      ${price}.<span style={{ fontSize: 14 }}>00</span>{" "}
+                      <s style={{ color: "#b1b1b1" }}>$249.99</s>
+                    </StyledText>
                     <BenefitsList />
                     <Stack direction="row" spacing={2}>
                       <Chip
@@ -110,11 +167,12 @@ export default function Home() {
                       />
                     </Stack>
                     <ShippingMessage isShipping={shipping} />
-
-                    <StyledText variant="h4">
-                      ${price}.<span style={{ fontSize: 14 }}>00</span>{" "}
-                      <s style={{ color: "#b1b1b1" }}>$249.99</s>
-                    </StyledText>
+                    <Stack direction="row" alignItems="center">
+                      <QuantitySelector
+                        quantity={quantity}
+                        onQuantity={(action: string) => handleQuantity(action)}
+                      />
+                    </Stack>
                     <Button variant="outlined" sx={{ borderRadius: 10 }}>
                       Add to Cart
                     </Button>
@@ -129,6 +187,13 @@ export default function Home() {
                   handleImagePathChange(imagePath)
                 }
               />
+            </Stack>
+
+            <Divider>
+              <StyledText variant="subtitle2">Highlights</StyledText>
+            </Divider>
+            <Stack direction="row" spacing={2}>
+              <HighlightNotes />
             </Stack>
           </Stack>
         </Container>

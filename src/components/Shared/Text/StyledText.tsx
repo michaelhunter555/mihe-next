@@ -5,6 +5,7 @@ import Typography from "@mui/material/Typography";
 type StyledTextProps = {
   children: React.ReactNode;
   sx?: SxProps;
+  align?: "right" | "left" | "center" | "inherit" | "justify" | undefined;
   variant:
     | "subtitle1"
     | "subtitle2"
@@ -19,9 +20,9 @@ type StyledTextProps = {
     | "caption";
 };
 
-const StyledText = ({ children, variant, sx }: StyledTextProps) => {
+const StyledText = ({ children, variant, sx, align }: StyledTextProps) => {
   return (
-    <Typography sx={sx} color="text.secondary" variant={variant}>
+    <Typography sx={sx} color="text.secondary" align={align} variant={variant}>
       {children}
     </Typography>
   );
