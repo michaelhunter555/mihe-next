@@ -3,7 +3,9 @@ import { useContext, useState } from "react";
 
 import FeaturedBanner from "@/components/FeaturedSection/Banners/FeaturedBanner";
 import BenefitsList from "@/components/FeaturedSection/BenefitsList";
+import FaqSection from "@/components/FeaturedSection/FAQs/FAQsSection";
 import HighlightNotes from "@/components/FeaturedSection/Highlights/PaperBenefits";
+import ProductTabs from "@/components/FeaturedSection/ProductTabs/TabsSelector";
 import QuantitySelector from "@/components/FeaturedSection/SelectQuantity";
 import ImageList from "@/components/ImagesList/ImageList";
 import ProductRatings from "@/components/Ratings/Ratings";
@@ -113,9 +115,7 @@ export default function Home() {
             </Stack>
 
             <Divider>
-              <StyledText variant="subtitle2">
-                The Mihe X-900 Fitness Bike
-              </StyledText>
+              <StyledText variant="h4">The Mihe X-900 Fitness Bike</StyledText>
             </Divider>
             <Stack direction="column" spacing={3}>
               <Grid container spacing={2}>
@@ -189,12 +189,18 @@ export default function Home() {
               />
             </Stack>
 
+            <ProductTabs />
+
             <Divider>
-              <StyledText variant="subtitle2">Highlights</StyledText>
+              <StyledText variant="h4">Highlights</StyledText>
             </Divider>
             <Stack direction="row" spacing={2}>
               <HighlightNotes />
             </Stack>
+            <Divider>
+              <StyledText variant="h4">FAQS</StyledText>
+            </Divider>
+            <FaqSection />
           </Stack>
         </Container>
       </Content>
