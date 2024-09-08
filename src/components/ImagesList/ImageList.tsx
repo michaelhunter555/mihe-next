@@ -2,7 +2,8 @@ import { useState } from "react";
 
 import Card from "@mui/material/Card";
 import CardMedia from "@mui/material/CardMedia";
-import Fade from "@mui/material/Fade";
+
+import { StyledFadeIn } from "../Shared/FadeIn/StyledFadeIn";
 
 interface ImageListProps {
   onImageClick: (path: string) => void;
@@ -17,7 +18,7 @@ const ImageList = ({ onImageClick }: ImageListProps) => {
   };
 
   return Array.from({ length: 14 }).map((_, i) => (
-    <Fade key={i} in={true} timeout={500 + i}>
+    <StyledFadeIn key={i} visible={true} delay={i * 0.1} yAxis={10}>
       <Card
         onClick={() => handleImageSelection(i)}
         sx={{
@@ -33,7 +34,7 @@ const ImageList = ({ onImageClick }: ImageListProps) => {
           sx={{ height: "100%", width: "100%", objectFit: "contain" }}
         />
       </Card>
-    </Fade>
+    </StyledFadeIn>
   ));
 };
 

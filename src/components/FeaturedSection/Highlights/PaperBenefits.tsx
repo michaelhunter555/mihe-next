@@ -4,11 +4,14 @@ import ExposureIcon from "@mui/icons-material/Exposure";
 import HeightIcon from "@mui/icons-material/Height";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import MonitorHeartIcon from "@mui/icons-material/MonitorHeart";
+import TheatersIcon from "@mui/icons-material/Theaters";
 import ThumbUpIcon from "@mui/icons-material/ThumbUp";
 import Divider from "@mui/material/Divider";
 import Grid from "@mui/material/Grid2";
 import Paper from "@mui/material/Paper";
+import Stack from "@mui/material/Stack";
 
+import CoreFeaturePreview from "../CoreFeatures/CoreFeatureSelector";
 import MiheCommercial from "../Video/MiheCommercial";
 
 type HighlightProps = {
@@ -77,7 +80,22 @@ const HighlightNotes = () => {
           </Paper>
         </Grid>
       ))}
+      <Divider flexItem sx={{ width: "100%", alignItems: "center" }}>
+        <Stack direction="row" alignItems="center" spacing={1}>
+          <StyledText variant="subtitle2">Core Features</StyledText>
+          <DirectionsBikeIcon />
+        </Stack>
+      </Divider>
       <Grid size={12}>
+        <CoreFeaturePreview />
+      </Grid>
+      <Grid size={12}>
+        <Divider sx={{ margin: "1rem auto" }}>
+          <Stack spacing={1} alignItems="center" direction="row">
+            <StyledText variant="subtitle2">Video</StyledText>
+            <TheatersIcon />
+          </Stack>
+        </Divider>
         <MiheCommercial />
       </Grid>
     </Grid>

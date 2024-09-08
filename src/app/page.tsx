@@ -9,10 +9,15 @@ import ProductTabs from "@/components/FeaturedSection/ProductTabs/TabsSelector";
 import QuantitySelector from "@/components/FeaturedSection/SelectQuantity";
 import ImageList from "@/components/ImagesList/ImageList";
 import ProductRatings from "@/components/Ratings/Ratings";
+import { StyledStack } from "@/components/Shared/FadeIn/StyledFadeIn";
 import StyledText from "@/components/Shared/Text/StyledText";
 import ShippingMessage from "@/components/ShippingOption/ShippingMessage";
+import CountdownTimer from "@/components/Timer/CountdownTimer";
 import { AuthContext } from "@/context/auth-context";
 import { CartContext } from "@/context/cart/cart-context";
+import AutoAwesomeIcon from "@mui/icons-material/AutoAwesome";
+import DirectionsBikeIcon from "@mui/icons-material/DirectionsBike";
+import LiveHelpIcon from "@mui/icons-material/LiveHelp";
 import Button from "@mui/material/Button";
 import CardMedia from "@mui/material/CardMedia";
 import Chip from "@mui/material/Chip";
@@ -111,13 +116,26 @@ export default function Home() {
                 flexItem
                 sx={{ margin: "0 auto", width: { xs: "100%", md: "50%" } }}
               />
-              <FeaturedBanner />
+              <StyledStack visible={true} delay={0.1}>
+                <FeaturedBanner />
+              </StyledStack>
             </Stack>
 
             <Divider>
-              <StyledText variant="h4">The Mihe X-900 Fitness Bike</StyledText>
+              <Stack direction="row" alignItems="center" spacing={1}>
+                <StyledText variant="subtitle2">
+                  The Mihe X-900 Fitness Bike
+                </StyledText>
+                <DirectionsBikeIcon />
+              </Stack>
             </Divider>
-            <Stack direction="column" spacing={3}>
+
+            <StyledStack
+              visible={true}
+              delay={0.1}
+              direction="column"
+              spacing={3}
+            >
               <Grid container spacing={2}>
                 <Grid size={7}>
                   <CardMedia
@@ -148,6 +166,7 @@ export default function Home() {
                       ${price}.<span style={{ fontSize: 14 }}>00</span>{" "}
                       <s style={{ color: "#b1b1b1" }}>$249.99</s>
                     </StyledText>
+                    <CountdownTimer timeLeft={20 * 60 * 1000} />
                     <BenefitsList />
                     <Stack direction="row" spacing={2}>
                       <Chip
@@ -173,32 +192,56 @@ export default function Home() {
                         onQuantity={(action: string) => handleQuantity(action)}
                       />
                     </Stack>
-                    <Button variant="outlined" sx={{ borderRadius: 10 }}>
+                    <Button
+                      variant="outlined"
+                      sx={{ borderRadius: 10 }}
+                      onClick={() => {
+                        cart.addToCart({
+                          id: 1,
+                          quantity: quantity,
+                          price: price,
+                        });
+                        // cart.quantity = cart.quantity += quantity;
+                        // cart.totalPrice = cart.totalPrice += price;
+                      }}
+                    >
                       Add to Cart
                     </Button>
                   </Stack>
                 </Grid>
               </Grid>
-            </Stack>
+            </StyledStack>
 
-            <Stack direction="row" spacing={1}>
+            <StyledStack
+              visible={true}
+              delay={0.3}
+              yAxis={5}
+              direction="row"
+              spacing={1}
+            >
               <ImageList
                 onImageClick={(imagePath: string) =>
                   handleImagePathChange(imagePath)
                 }
               />
-            </Stack>
+            </StyledStack>
 
             <ProductTabs />
 
             <Divider>
-              <StyledText variant="h4">Highlights</StyledText>
+              <Stack direction="row" spacing={1} alignItems="center">
+                <StyledText variant="subtitle2">Highlights</StyledText>
+                <AutoAwesomeIcon />
+              </Stack>
             </Divider>
             <Stack direction="row" spacing={2}>
               <HighlightNotes />
             </Stack>
             <Divider>
-              <StyledText variant="h4">FAQS</StyledText>
+              <Stack direction="row" alignItems="center" spacing={1}>
+                <StyledText variant="subtitle2">FAQS</StyledText>
+                <LiveHelpIcon />
+              </Stack>
             </Divider>
             <FaqSection />
           </Stack>

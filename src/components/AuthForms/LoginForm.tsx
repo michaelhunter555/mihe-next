@@ -166,7 +166,6 @@ const LoginForm = () => {
             autoComplete="email"
             variant="outlined"
             required
-            autoFocus
             value={formState?.inputs?.email?.value}
             onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
               inputHandler(
@@ -196,7 +195,6 @@ const LoginForm = () => {
             id="password"
             type="password"
             placeholder="••••••"
-            autoFocus
             required
             value={formState?.inputs?.password?.value}
             onChange={(event: React.ChangeEvent<HTMLInputElement>) =>

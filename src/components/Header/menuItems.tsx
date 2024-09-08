@@ -15,7 +15,7 @@ export const MainMenuItems: MenuItemsProps[] = [
     route: "/",
   },
   {
-    text: "products",
+    text: "Products",
     component: "PRODUCTS",
     route: "/products",
   },
@@ -33,15 +33,5 @@ export const MainMenuItems: MenuItemsProps[] = [
     text: "Contact",
     component: "CONTACT",
     route: "/contact",
-  },
-  {
-    text: "Login",
-    component: "Login",
-    route: "/login",
-  },
-  {
-    text: "Logout",
-    component: "LOGOUT",
-    route: "/logout",
   },
 ];

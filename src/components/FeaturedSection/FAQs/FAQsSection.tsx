@@ -49,7 +49,7 @@ const FaqSection = () => {
             onChange={handlePanelChange(faq.panel)}
           >
             <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-              <StyledText variant="h6">{faq.summary}</StyledText>
+              <StyledText variant="subtitle1">{faq.summary}</StyledText>
             </AccordionSummary>
             <AccordionDetails>
               <StyledText variant="subtitle2">{faq.details}</StyledText>

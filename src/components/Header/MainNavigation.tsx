@@ -1,24 +1,32 @@
 "use client";
 
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
+
+import Image from "next/image";
 
 import { AuthContext } from "@/context/auth-context";
+import { CartContext } from "@/context/cart/cart-context";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import { useMediaQuery, useTheme } from "@mui/material";
+import Chip from "@mui/material/Chip";
 import Divider from "@mui/material/Divider";
 import Grid2 from "@mui/material/Grid2";
 import Stack from "@mui/material/Stack";
-import Typography from "@mui/material/Typography";
 
+import CartModal from "../Cart/CartModal";
 import StyledNextLink from "../Shared/Links/StyledNextLink";
+import StyledText from "../Shared/Text/StyledText";
 import Header from "./Header";
 
 const MainNavigation = () => {
   const auth = useContext(AuthContext);
+  const cart = useContext(CartContext);
   const theme = useTheme();
   const isMobileOrTablet = useMediaQuery(
     theme.breakpoints.down("sm") || theme.breakpoints.down("md")
   );
+  const [openCartModal, setOpenCartModal] = useState<boolean>(false);
+
   return (
     <Grid2
       container
@@ -29,6 +37,7 @@ const MainNavigation = () => {
         borderBottom: "1px solid #f1f1f1",
       }}
     >
+      <CartModal open={openCartModal} onClose={() => setOpenCartModal(false)} />
       <Grid2>
         <Stack
           direction="row"
@@ -36,22 +45,38 @@ const MainNavigation = () => {
           spacing={5}
           sx={{ width: "100%", marginLeft: 5 }}
         >
-          <Typography color="text.secondary" fontWeight={800}>
-            MiheFitness
-          </Typography>
+          <Image src="mihe_logo.svg" alt="mihe-logo" width={100} height={75} />
+
           <Header />
         </Stack>
       </Grid2>
 
       <Grid2 size={4}>
         <Stack direction="row" alignItems="center" spacing={3}>
-          {auth.isLoggedIn ? (
-            <StyledNextLink route="/login">Login</StyledNextLink>
+          {!auth.isLoggedIn ? (
+            <StyledNextLink route="/signup">
+              <StyledText variant="subtitle2">Login/Sign-up</StyledText>
+            </StyledNextLink>
           ) : (
-            <StyledNextLink route="/signup">create account</StyledNextLink>
+            <StyledNextLink route="/signup">
+              <StyledText variant="subtitle2">Logout</StyledText>
+            </StyledNextLink>
           )}
           <Divider orientation="vertical" flexItem />
-          <ShoppingCartIcon />
+          <Chip
+            onClick={() => setOpenCartModal((prev) => !prev)}
+            component="button"
+            clickable
+            variant="outlined"
+            label={
+              <Stack direction="row" spacing={1}>
+                <StyledText variant="subtitle1">
+                  ${cart.totalPrice.toFixed(2)}
+                </StyledText>
+                <ShoppingCartIcon />
+              </Stack>
+            }
+          />
         </Stack>
       </Grid2>
     </Grid2>
